@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TodoTasksApp</string>
+    <string name="time_utilized">time_utilized</string>
 </resources>
