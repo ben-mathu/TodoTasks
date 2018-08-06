@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.ben.todotasksapp.todos.ListTaskActivity;
+import com.example.ben.todotasksapp.tasklist.ListTaskActivity;
 
 public class TaskMainActivity extends AppCompatActivity {
 
@@ -20,6 +20,7 @@ public class TaskMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TaskMainActivity.this, ListTaskActivity.class);
+                startActivity(intent);
             }
         });
     }

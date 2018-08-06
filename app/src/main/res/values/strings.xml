@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">TodoTasksApp</string>
-    <string name="time_utilized">time_utilized</string>
+    <string name="time_remained">Remaining Time</string>
+    <string name="search">Search</string>
+    <string name="error_list_task">Error: Task list is empty</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.ben.todotasksapp.data;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,9 +14,8 @@ public class ItemsLab {
     private Context context;
     private List<Item> items;
 
-    private Item item;
     public ItemsLab(Context context) {
-        item = new Item();
+        items = new ArrayList<>();
         this.context = context;
     }
 
@@ -23,9 +23,10 @@ public class ItemsLab {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems() {
+        Item item = new Item();
         for (int i = 0; i < 100; i++) {
-            item.setTaskName("Task" + i);
+            item.setTaskName("Task ");
             item.setUuid(UUID.randomUUID());
             items.add(item);
         }

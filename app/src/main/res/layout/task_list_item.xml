@@ -8,8 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        app:cardBackgroundColor="#FFF"
         app:cardCornerRadius="5dp"
-        app:cardElevation="1dp">
+        app:cardElevation="3dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,16 +22,16 @@
                 android:layout_height="wrap_content"
                 tool:text="Task Name"
                 android:textSize="21sp"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#000"/>
 
             <TextView
                 android:id="@+id/textView_utilized_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/textView_time"
-                android:layout_marginEnd="5dp"
-                android:text="@string/time_utilized"
-                android:textColor="#ffffff"/>
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="40dp"
+                android:text="@string/time_remained"
+                android:textColor="#000"/>
 
             <TextView
                 android:id="@+id/textView_time"
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 tool:text="time"
-                android:textColor="#ffffff"/>
+                android:textColor="#000"/>
 
             <TextView
                 android:id="@+id/textView_task_description"
@@ -48,7 +49,7 @@
                 android:layout_marginTop="5dp"
                 tool:text="description"
                 android:textSize="16sp"
-                android:textColor="#e3e3e3"/>
+                android:textColor="#000"/>
 
 
             <TextView
@@ -61,7 +62,7 @@
                 android:layout_marginStart="10dp"
                 tool:text="contributors"
                 android:textSize="16sp"
-                android:textColor="#e3e3e3"/>
+                android:textColor="#000"/>
 
             <TextView
                 android:id="@+id/textView_contributors_tags"
@@ -73,7 +74,7 @@
                 android:padding="5dp"
                 android:background="@drawable/wireframe_background"
                 tool:text="benard"
-                android:textColor="#ffffff"
+                android:textColor="#000"
                 android:textSize="16sp"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
