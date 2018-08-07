@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.ben.todotasksapp.R;
@@ -22,7 +23,7 @@ public class ListTaskActivity extends FragmentActivity implements ListTaskView {
     private TextView txtErrorMessage;
 
     private ListTaskPresenter listTaskPresenter;
-    private Item item;
+    private List<Item> itemList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,10 +32,8 @@ public class ListTaskActivity extends FragmentActivity implements ListTaskView {
 
         txtErrorMessage = findViewById(R.id.textView_error);
 
-        item = new Item();
-
         listTaskPresenter = new ListTaskPresenter(this);
-        listTaskPresenter.produceTaskItems();
+        itemList = listTaskPresenter.produceTaskItems();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
@@ -48,12 +47,13 @@ public class ListTaskActivity extends FragmentActivity implements ListTaskView {
     }
 
     @Override
-    public List<Item> getTaskList(ItemsLab items) {
-        return items.getItems();
+    public List<Item> getTaskList() {
+        return itemList;
     }
 
     @Override
     public void showErrorMassage(int resId) {
-
+        txtErrorMessage.setVisibility(View.VISIBLE);
+        txtErrorMessage.setError(getString(R.string.error_list_task));
     }
 }

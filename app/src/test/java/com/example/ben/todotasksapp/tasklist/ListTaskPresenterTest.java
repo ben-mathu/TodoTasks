@@ -1,6 +1,9 @@
 package com.example.ben.todotasksapp.tasklist;
 
+import android.content.Context;
+
 import com.example.ben.todotasksapp.R;
+import com.example.ben.todotasksapp.data.ItemsLab;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,9 +17,12 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ListTaskPresenterTest {
+    private ItemsLab itemsLab;
 
     @Mock
     private ListTaskView listTaskView;
+    @Mock
+    private Context context;
     private ListTaskPresenter presenter;
 
     @Before
@@ -26,17 +32,18 @@ public class ListTaskPresenterTest {
 
     @Test
     public void showErrorMessageIfListIsEmpty() throws Exception{
-        when(listTaskView.getTaskList(items)).thenReturn("");
+        itemsLab = new ItemsLab(context);
+        when(listTaskView.getTaskList()).thenReturn(itemsLab.getItems());
 
         verify(listTaskView).showErrorMassage(R.string.error_list_task);
     }
 
-    @Test
-    public void produceTaskItems() {
-        int expected = 100;
-        int actual = 40;
-        int delta = 30;
-
-        assertEquals(expected,actual,delta);
-    }
+//    @Test
+//    public void produceTaskItems() {
+//        int expected = 100;
+//        int actual = 40;
+//        int delta = 30;
+//
+//        assertEquals(expected,actual,delta);
+//    }
 }

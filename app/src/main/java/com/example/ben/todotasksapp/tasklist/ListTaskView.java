@@ -6,7 +6,7 @@ import com.example.ben.todotasksapp.data.ItemsLab;
 import java.util.List;
 
 public interface ListTaskView {
-    List<Item> getTaskList(ItemsLab items);
+    List<Item> getTaskList();
 
     void showErrorMassage(int resId);
 }
