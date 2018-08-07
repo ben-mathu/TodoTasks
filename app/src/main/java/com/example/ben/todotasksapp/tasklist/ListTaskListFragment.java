@@ -26,7 +26,7 @@ import java.util.List;
  * Created by Bernard on 8/3/2018.
  */
 
-public class ListTaskListFragment extends Fragment{
+public class ListTaskListFragment extends Fragment {
     private RecyclerView recyclerViewTaskList;
 
     private ListTasksAdapter listTasksAdapter;
@@ -44,7 +44,10 @@ public class ListTaskListFragment extends Fragment{
         recyclerViewTaskList = view.findViewById(R.id.recyclerView_task_list);
         recyclerViewTaskList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        updateUi();
+//        updateUi();
+        
+        listTasksAdapter = new ListTasksAdapter(getActivity());
+        recyclerViewTaskList.setAdapter(listTasksAdapter);
 
         return view;
     }
@@ -53,10 +56,10 @@ public class ListTaskListFragment extends Fragment{
      * this function updates the UI
      * whenever the user scrolls through the list
      */
-    private void updateUi() {
+    /*private void updateUi() {
         listTasksAdapter = new ListTasksAdapter(getActivity());
         recyclerViewTaskList.setAdapter(listTasksAdapter);
-    }
+    }*/
 
     private class ListTasksHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtTaskName, txtTime, txtDescription, txtContributors;
