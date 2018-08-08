@@ -16,8 +16,7 @@ public class ListTaskPresenter {
         this.listTaskView = listTaskView;
     }
 
-    public int produceTaskItems() {
-        itemList = listTaskView.getTaskList();
-        return listTaskView.showErrorMassage(R.string.error_list_task);
+    public List<Item> produceTaskItems() {
+        return listTaskView.getTaskList();
     }
 }
