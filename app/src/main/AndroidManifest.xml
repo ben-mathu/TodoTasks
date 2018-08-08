@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddToDoTask" />
+        <activity android:name=".CapturedDatiles"></activity>
     </application>
 
 </manifest>
