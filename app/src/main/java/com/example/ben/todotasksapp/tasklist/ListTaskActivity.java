@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.ben.todotasksapp.R;
-import com.example.ben.todotasksapp.data.Item;
-import com.example.ben.todotasksapp.data.ItemsLab;
 
 import java.util.List;
 
@@ -19,11 +17,10 @@ import java.util.List;
  * Created by Bernard on 8/1/2018.
  */
 
-public class ListTaskActivity extends FragmentActivity implements ListTaskView {
+public class ListTaskActivity extends FragmentActivity {
     private TextView txtErrorMessage;
 
     private ListTaskPresenter listTaskPresenter;
-    private List<Item> itemList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,9 +28,6 @@ public class ListTaskActivity extends FragmentActivity implements ListTaskView {
         setContentView(R.layout.activity_task_list);
 
         txtErrorMessage = findViewById(R.id.textView_error);
-
-        listTaskPresenter = new ListTaskPresenter(this);
-        itemList = listTaskPresenter.produceTaskItems();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
@@ -44,16 +38,5 @@ public class ListTaskActivity extends FragmentActivity implements ListTaskView {
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
-    }
-
-    @Override
-    public List<Item> getTaskList() {
-        return itemList;
-    }
-
-    @Override
-    public void showErrorMassage(int resId) {
-        txtErrorMessage.setVisibility(View.VISIBLE);
-        txtErrorMessage.setError(getString(R.string.error_list_task));
     }
 }

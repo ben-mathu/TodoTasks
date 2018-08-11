@@ -1,45 +1,43 @@
-package com.example.ben.todotasksapp.data.user;
+package com.example.ben.todotasksapp.data.user.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 import java.util.UUID;
 
 @Entity(tableName = "users")
 public class User {
+    @NonNull
     @PrimaryKey
-    @ColumnInfo(name = "user_num")
-    private int userNum;
     @ColumnInfo(name = "user_id")
     private String userId;
+    @ColumnInfo(name = "task_id")
+    private String taskId;
     @ColumnInfo(name = "user_name")
     private String userName;
+    @ColumnInfo(name = "first_name")
+    private String fname;
+    @ColumnInfo(name = "last_name")
+    private String lname;
     @ColumnInfo(name = "date_timestamp")
     private Date date;
 
-    public User(int userNum, String userId, String userName) {
-        this.userNum = userNum;
+    public User(@NonNull String userId, String userName) {
         this.userId = userId;
         this.userName = userName;
     }
 
     @Ignore
-    public User(int userNum, String userId, String userName, Date date) {
-        this.userNum = userNum;
+    public User(int userNum, String userId, String userName, String fname, String lname, Date date) {
         this.userId = UUID.randomUUID().toString();
         this.userName = userName;
+        this.fname = fname;
+        this.lname = lname;
         this.date = new Date(date.getTime());
-    }
-
-    public int getUserNum() {
-        return userNum;
-    }
-
-    public void setUserNum(int userNum) {
-        this.userNum = userNum;
     }
 
     public String getUserId() {
@@ -64,5 +62,29 @@ public class User {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

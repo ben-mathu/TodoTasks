@@ -3,7 +3,6 @@ package com.example.ben.todotasksapp.tasklist;
 import android.content.Context;
 
 import com.example.ben.todotasksapp.R;
-import com.example.ben.todotasksapp.data.ItemsLab;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

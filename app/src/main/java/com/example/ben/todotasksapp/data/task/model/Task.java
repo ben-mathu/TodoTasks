@@ -1,4 +1,4 @@
-package com.example.ben.todotasksapp.data.task;
+package com.example.ben.todotasksapp.data.task.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

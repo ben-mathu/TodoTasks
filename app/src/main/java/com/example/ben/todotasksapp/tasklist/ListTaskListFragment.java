@@ -15,10 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ben.todotasksapp.R;
-import com.example.ben.todotasksapp.data.Item;
-import com.example.ben.todotasksapp.data.ItemsLab;
 import com.example.ben.todotasksapp.displaytask.DisplayTaskActivity;
-import com.example.ben.todotasksapp.displaytask.DisplayTaskFragment;
 
 import java.util.List;
 
@@ -31,9 +28,15 @@ public class ListTaskListFragment extends Fragment {
 
     private ListTasksAdapter listTasksAdapter;
 
+    private ListTaskPresenter listTaskPresenter;
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        listTaskPresenter.getTasks().observe(this, task -> {
+            listTasksAdapter = new ListTasksAdapter(getActivity());
+            recyclerViewTaskList.setAdapter(listTasksAdapter);
+        });
     }
 
     @Nullable
@@ -43,12 +46,6 @@ public class ListTaskListFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_list_task_items, container, false);
         recyclerViewTaskList = view.findViewById(R.id.recyclerView_task_list);
         recyclerViewTaskList.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-//        updateUi();
-        
-        listTasksAdapter = new ListTasksAdapter(getActivity());
-        recyclerViewTaskList.setAdapter(listTasksAdapter);
-
         return view;
     }
 
@@ -82,15 +79,10 @@ public class ListTaskListFragment extends Fragment {
     }
 
     private class ListTasksAdapter extends RecyclerView.Adapter<ListTasksHolder> {
-        private ItemsLab itemsLab;
-        private List<Item> itemTasks;
         private Context context;
 
         public ListTasksAdapter(Context context) {
             this.context = context;
-            itemsLab = new ItemsLab(context);
-            itemsLab.setItems();
-            itemTasks = itemsLab.getItems();
         }
 
         @NonNull
@@ -104,7 +96,7 @@ public class ListTaskListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull final ListTasksHolder holder, int position) {
-            holder.txtTaskName.setText(itemTasks.get(position).getTaskName().toString());
+            holder.txtTaskName.setText(task.get(position).getTaskName().toString());
             holder.txtDescription.setText("Hey I need a description");
             holder.txtContributors.setText("benard");
             new CountDownTimer(30000, 1000) {

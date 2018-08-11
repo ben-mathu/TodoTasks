@@ -1,12 +1,9 @@
 package com.example.ben.todotasksapp.tasklist;
 
-import com.example.ben.todotasksapp.data.Item;
-import com.example.ben.todotasksapp.data.ItemsLab;
+import android.arch.lifecycle.LiveData;
 
-import java.util.List;
+import com.example.ben.todotasksapp.data.task.model.Task;
 
 public interface ListTaskView {
-    List<Item> getTaskList();
-
-    void showErrorMassage(int resId);
+    LiveData<Task> getTask();
 }

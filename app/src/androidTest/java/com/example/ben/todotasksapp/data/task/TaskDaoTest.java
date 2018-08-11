@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 
 import com.example.ben.todotasksapp.data.TodoTaskAppDatabase;
+import com.example.ben.todotasksapp.data.task.model.Task;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,22 +1,31 @@
 package com.example.ben.todotasksapp.tasklist;
 
-import com.example.ben.todotasksapp.R;
-import com.example.ben.todotasksapp.data.Item;
-import com.example.ben.todotasksapp.data.ItemsLab;
+import android.arch.lifecycle.LiveData;
+
+import com.example.ben.todotasksapp.data.task.TaskRepository;
+import com.example.ben.todotasksapp.data.task.model.Task;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class ListTaskPresenter {
-    private ListTaskView listTaskView;
-    private ItemsLab itemsLab;
+    private TaskRepository taskRepository;
+    private LiveData<List<Task>> tasks;
 
-    private List<Item> itemList;
-
-    public ListTaskPresenter(ListTaskView listTaskView) {
-        this.listTaskView = listTaskView;
+    @Inject
+    public ListTaskPresenter(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
-    public List<Item> produceTaskItems() {
-        return listTaskView.getTaskList();
+    public void initTasks() {
+        if (tasks != null) {
+            return;
+        }
+        tasks = taskRepository.getAll();
+    }
+
+    public LiveData<List<Task>> getTasks() {
+        return tasks;
     }
 }
