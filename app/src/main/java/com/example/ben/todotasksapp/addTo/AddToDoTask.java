@@ -19,12 +19,13 @@ import android.widget.Toast;
 import com.example.ben.todotasksapp.R;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddToDoTask extends AppCompatActivity {
    Dbhelper dbhelper;
     EditText newtask, description;
     Switch aswitch;
-    TextView startingDate, deadline;
+    TextView duedate;
 
     Button btnContinue, viewAddedTask;
     int day, month, year;
@@ -41,11 +42,12 @@ public class AddToDoTask extends AppCompatActivity {
         aswitch = findViewById (R.id.aswitchid);
         newtask = findViewById (R.id.nameEditext);
         description = findViewById (R.id.descText);
-        startingDate = findViewById (R.id.textStartingDate);
-        deadline = findViewById (R.id.textdeadline);
+        duedate = findViewById (R.id.textStartingDate);
+       // deadline = findViewById (R.id.textdeadline);
         btnContinue = findViewById (R.id.btncontinue);
         viewAddedTask=findViewById(R.id.viewAll);
         showMessage();
+
         //        btnContinue.setOnClickListener (new View.OnClickListener () {
 //            @Override
 //            public void onClick(View v) {
@@ -54,7 +56,7 @@ public class AddToDoTask extends AppCompatActivity {
                 btnContinue.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean isInserted =dbhelper.insertData(newtask.getText().toString(),description.getText().toString(),deadline.getText().toString(),startingDate.getText().toString());
+                        boolean isInserted =dbhelper.insertData(newtask.getText().toString(),description.getText().toString(),duedate.getText().toString());
                         if (isInserted) {
                             Toast.makeText( AddToDoTask.this, "data successfully inserted", Toast.LENGTH_SHORT).show();
                         } else {
@@ -73,13 +75,13 @@ public class AddToDoTask extends AppCompatActivity {
 
 
 
-        startingDate.setOnClickListener (new View.OnClickListener () {
+     duedate.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance ();
-                int year = cal.get (Calendar.YEAR);
-                int month = cal.get (Calendar.MONTH);
-                int day = cal.get (Calendar.DAY_OF_MONTH);
+                 year = cal.get (Calendar.YEAR);
+                month = cal.get (Calendar.MONTH);
+                 day = cal.get (Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog (AddToDoTask.this, android.R.style.Theme_Holo_Dialog_MinWidth,
                         dateSetListener, year, month, day);
                 dialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
@@ -92,33 +94,33 @@ public class AddToDoTask extends AppCompatActivity {
         dateSetListener = new DatePickerDialog.OnDateSetListener () {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month + 1;
+                //month = month + 1;
                 //  Log.d("on date set Date:mm/dd/yy" + month +"/"+ day ,"/"+ year);
             }
         };
 
-        deadline.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                Calendar cal = Calendar.getInstance ();
-                year = cal.get (Calendar.YEAR);
-                month = cal.get (Calendar.MONTH);
-                day = cal.get (Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog (AddToDoTask.this, android.R.style.Theme_Holo_Dialog_MinWidth,
-                        dateSetListener, year, month, day);
-                dialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
-                dialog.show ();
+//        deadline.setOnClickListener (new View.OnClickListener () {
+//            @Override
+//            public void onClick(View v) {
+//                Calendar cal = Calendar.getInstance ();
+//                year = cal.get (Calendar.YEAR);
+//                month = cal.get (Calendar.MONTH);
+//                day = cal.get (Calendar.DAY_OF_MONTH);
+//                DatePickerDialog dialog = new DatePickerDialog (AddToDoTask.this, android.R.style.Theme_Holo_Dialog_MinWidth,
+//                        dateSetListener, year, month, day);
+//                dialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
+//                dialog.show ();
 
-            }
-        });
+//            }
+//        });
         dateSetListener = new DatePickerDialog.OnDateSetListener () {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 month = month + 1;
                 // Log.d ("on date set Date:mm/dd/yy" + month + "/" + day, "/" + year);
                 String date = month + "/" + day + "/" + year;
-                startingDate.setText (date);
-                deadline.setText (date);
+                duedate.setText (date);
+               // deadline.setText (date);
 
 
             }
@@ -146,8 +148,8 @@ public class AddToDoTask extends AppCompatActivity {
                     buffer.append("id:").append(res.getString(0)).append("\n");
                     buffer.append("Task Name:").append(res.getString(1)).append("\n");
                     buffer.append("Description:").append(res.getString(2)).append("\n");
-                    buffer.append("starting Date:").append(res.getString(3)).append("\n");
-                    buffer.append("deadline:").append(res.getString(4)).append("\n");
+                    buffer.append("Due Date:").append(res.getString(3)).append("\n");
+                  //  buffer.append("deadline:").append(res.getString(4)).append("\n");
                 }
                 //show all data
                 showMessage("ALL Data",buffer.toString() );
@@ -160,7 +162,6 @@ public class AddToDoTask extends AppCompatActivity {
         builder.setCancelable(true);
         builder.setTitle(title);
         builder.setMessage(message);
-        //
         builder.show();
     }
 
