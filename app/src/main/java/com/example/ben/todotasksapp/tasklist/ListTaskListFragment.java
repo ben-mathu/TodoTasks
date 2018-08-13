@@ -33,10 +33,12 @@ public class ListTaskListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listTaskPresenter.getTasks().observe(this, task -> {
-            listTasksAdapter = new ListTasksAdapter(getActivity());
-            recyclerViewTaskList.setAdapter(listTasksAdapter);
-        });
+        listTaskPresenter.getTasks().observe(this, task -> updateUi());
+    }
+
+    private void updateUi() {
+        listTasksAdapter = new ListTasksAdapter(getActivity());
+        recyclerViewTaskList.setAdapter(listTasksAdapter);
     }
 
     @Nullable
@@ -79,6 +81,7 @@ public class ListTaskListFragment extends Fragment {
     }
 
     private class ListTasksAdapter extends RecyclerView.Adapter<ListTasksHolder> {
+
         private Context context;
 
         public ListTasksAdapter(Context context) {
