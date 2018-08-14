@@ -10,18 +10,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.Date;
 
 public class Dbhelper extends SQLiteOpenHelper{
-    private  static final String DATA_BASE_NAME="add_task";
-private static final String TABLE_NAME="task_details";
-private static final String ID_TASK="ID";
-public static final String col2="TASK_NAME";
-public  static final String col3="DESCRIPTION";
-public static final String DATE = "create_timestamp";
+    private  static final String DATABASE_NAME = "add_task";
+    private static final String TABLE_NAME = "task_details";
+    private static final String ID_TASK ="ID";
+    public static final String col2="TASK_NAME";
+    public  static final String col3="DESCRIPTION";
+    public static final String DATE = "create_timestamp";
     //public static final String COLUMN_TIME_STAMP = "TIMESTAMP";
 
 
    // public static final String col5="DEADLINE";
 //public static final Boolean col5= ;
-    private static final String TASKSQL = "CREATE TABLE " + TABLE_NAME + "(" + ID_TASK + " INTEGER PRIMARY KEY AUTOINCREMENT,"+col2 +"TEXT," + col3 +" TEXT,"+DATE+" DATETIME DEFAULT CURRENT_TIMESTAMP)";
+    private static final String TASKSQL = "CREATE TABLE " +
+           TABLE_NAME + "(" +
+           ID_TASK + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
+           col2 +" TEXT," +
+           col3 +" TEXT,"+
+           DATE+" DATETIME DEFAULT CURRENT_TIMESTAMP)";
     Dbhelper (Context context){super(context ,TABLE_NAME, null,1);}
     @Override
     public void onCreate(SQLiteDatabase db){
@@ -39,7 +44,7 @@ public static final String DATE = "create_timestamp";
         ContentValues contentValues = new ContentValues();
         contentValues.put(col2,taskname);
         contentValues.put(col3, description);
-        contentValues.put(DATE, duedate);
+//        contentValues.put(DATE, duedate);
 
 
         Long result = db.insert(TABLE_NAME, null, contentValues);
