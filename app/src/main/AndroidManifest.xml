@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TaskMainActivity" />
+        <activity android:name=".RoomDatabase.AddedTasks" />
+        <activity android:name=".RoomDatabase.MainActivity2"></activity>
     </application>
 
 </manifest>
