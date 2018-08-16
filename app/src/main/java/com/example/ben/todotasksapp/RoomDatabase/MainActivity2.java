@@ -1,6 +1,4 @@
 package com.example.ben.todotasksapp.RoomDatabase;
-
-
 import android.app.DatePickerDialog;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
@@ -20,11 +18,12 @@ import com.example.ben.todotasksapp.R;
 
 
 import java.util.Calendar;
+import java.util.UUID;
 
 public class MainActivity2 extends AppCompatActivity {
     public static Mydatabase mydatabase;
     EditText newtask, description;
-    Switch aswitch;
+    //Switch aswitch;
     TextView duedate;
 
     Button btnContinue, viewAddedTask;
@@ -49,6 +48,7 @@ public class MainActivity2 extends AppCompatActivity {
                 String duedat = duedate.getText().toString();
 
                 Taskdetails taskdetails = new Taskdetails();
+                taskdetails.setId(UUID.randomUUID().toString());
                 taskdetails.setNewtask(tasnew);
                 taskdetails.setDescription(description1);
                 taskdetails.setDate(duedat);
@@ -91,12 +91,7 @@ public class MainActivity2 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//        public void onSwitchClick(View view) {
-//        if (aswitch.isChecked ())
-//            Toast.makeText (MainActivity2.this, "high priority set", Toast.LENGTH_SHORT).show ();
-//        else
-//            Toast.makeText (MainActivity2.this, "off", Toast.LENGTH_SHORT).show ();
-//    };
+
     }
 
 }

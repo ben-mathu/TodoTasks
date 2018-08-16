@@ -2,12 +2,17 @@ package com.example.ben.todotasksapp.RoomDatabase;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+import java.util.UUID;
 
 @Entity(tableName = "task_details")
 public class Taskdetails {
-   @PrimaryKey
-    private  int Id;
+    @PrimaryKey
+    @NonNull
+    private String Id;
     @ColumnInfo(name = "task_name")
     private String newtask;
     @ColumnInfo(name = "description")
@@ -15,11 +20,23 @@ public class Taskdetails {
     @ColumnInfo(name ="due_date")
     private String date;
 
-    public int getId() {
+    @Ignore
+    public Taskdetails(String newtask, String description, String date) {
+        Id = UUID.randomUUID().toString();
+        this.newtask = newtask;
+        Description = description;
+        this.date = date;
+    }
+
+    public Taskdetails() {
+
+    }
+
+    public String getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         Id = id;
     }
 
