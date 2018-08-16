@@ -1,204 +1,261 @@
-package com.example.ben.todotasksapp.addTo;
-
-import android.app.DatePickerDialog;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.ben.todotasksapp.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import static com.example.ben.todotasksapp.addTo.Dbhelper.DATE;
-import static com.example.ben.todotasksapp.addTo.Dbhelper.col2;
-import static com.example.ben.todotasksapp.addTo.Dbhelper.col3;
-
-public class AddToDoTask extends AppCompatActivity {
-   Dbhelper dbhelper;
-    EditText newtask, description;
-    Switch aswitch;
-    TextView duedate;
-    Button btnContinue, viewAddedTask;
-    int day, month, year;
-
-    private DatePickerDialog.OnDateSetListener dateSetListener;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        setContentView (R.layout.activity_add_to_do_task);
-       // mpresenter=new CreateTodoPresenter(this);
-        dbhelper=new Dbhelper(this);
-        aswitch = findViewById (R.id.aswitchid);
-        newtask = findViewById (R.id.nameEditext);
-        description = findViewById (R.id.descText);
-        duedate = findViewById (R.id.textStartingDate);
-       // deadline = findViewById (R.id.textdeadline);
-        btnContinue = findViewById (R.id.btncontinue);
-        viewAddedTask=findViewById(R.id.viewAll);
-
-        showMessage();
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//       duedate = sdf.format(new Date());
-
-
-
-        //        btnContinue.setOnClickListener (new View.OnClickListener () {
-//            @Override
-//            public void onClick(View v) {
-//                editnewtask = newtask.getText ().toString ().trim ();
+//package com.example.ben.todotasksapp.addTo;
 //
-// edtextDescription = description.getText ().toString ().trim ();
-
-            btnContinue.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    boolean isInserted = insertData(newtask.getText().toString(), description.getText().toString(),duedate.getText().toString());
-                    if (isInserted == true) {
-                        Toast.makeText(AddToDoTask.this, "data successfully inserted", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(AddToDoTask.this, "data not ineserted", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-
-            });
-
-
-//                Intent intent = new Intent (AddToDoTask.this, CapturedDatiles.class);
-//                intent.putExtra ("value", editnewtask);
-//                intent.putExtra ("value2", edtextDescription);
-//                startActivity (intent);intent
-//                intent.putExtra("Date:", month +"/"+day+ "/"+ year+ "/");
-//               intent.putExtra ("Task Name:", newtask);startActivity(intent);
-//                finish ();
-////        }
-
-
-
-     duedate.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                Calendar cal = Calendar.getInstance ();
-                 year = cal.get (Calendar.YEAR);
-                month = cal.get (Calendar.MONTH);
-                 day = cal.get (Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog (AddToDoTask.this, android.R.style.Theme_Holo_Dialog_MinWidth,
-                        dateSetListener, year, month, day);
-                dialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
-                dialog.show ();
-
-            }
-        });
-
-
-        dateSetListener = new DatePickerDialog.OnDateSetListener () {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month + 1;
-                //  Log.d("on date set Date:mm/dd/yy" + month +"/"+ day ,"/"+ year);
-            }
-        };
-
-//        deadline.setOnClickListener (new View.OnClickListener () {
-//            @Override
-//            public void onClick(View v) {
-//                Calendar cal = Calendar.getInstance ();
-//                year = cal.get (Calendar.YEAR);
-//                month = cal.get (Calendar.MONTH);
-//                day = cal.get (Calendar.DAY_OF_MONTH);
-//                DatePickerDialog dialog = new DatePickerDialog (AddToDoTask.this, android.R.style.Theme_Holo_Dialog_MinWidth,
-//                        dateSetListener, year, month, day);
-//                dialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
-//                dialog.show ();
-
-//            }
-//        });
-        dateSetListener = new DatePickerDialog.OnDateSetListener () {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month + 1;
-                // Log.d ("on date set Date:mm/dd/yy" + month + "/" + day, "/" + year);
-                String date = month + "/" + day + "/" + year;
-                duedate.setText (date);
-               // deadline.setText (date);
-
-
-            }
-        };
-    }
-
-    private boolean insertData(String taskname, String description,String duedate) {
-        //long dudate = new Date().getTime();//to pass data to save time
-        SQLiteDatabase db = dbhelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(col2,taskname);
-        contentValues.put(col3, description);
- contentValues.put(DATE, duedate);
- //contentValues .put("due date", DateFormat.getDateTimeInstance(). format(duedate));
-
-        // db.insert(Dbhelper)
-        Long result = db.insert("task_details", null, contentValues);
-        return result != -1;
-
-
-    }
-    public void onSwitchClick(View view) {
-        if (aswitch.isChecked ())
-            Toast.makeText (AddToDoTask.this, "high priority set", Toast.LENGTH_SHORT).show ();
-        else
-            Toast.makeText (AddToDoTask.this, "off", Toast.LENGTH_SHORT).show ();
-    }
-    public void showMessage(){
-        viewAddedTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor cursor = dbhelper.getAllData();
-                cursor.moveToFirst();
-                while (cursor.moveToNext()){
-                    String name = cursor.getString(cursor.getColumnIndexOrThrow("col1"));
-                    Toast.makeText(AddToDoTask.this, name, Toast.LENGTH_SHORT).show();
-                }
-                if (cursor.getCount() == 0) {
-                    // show message
-                    showMessage("Error!", "No content Recorded");
-                    return;
-                }
-                StringBuilder buffer = new StringBuilder();
-                while (cursor.moveToNext()) {
-                    buffer.append("id:").append(cursor.getString(0)).append("\n");
-                    buffer.append("Task Name:").append(cursor.getString(1)).append("\n");
-                    buffer.append("Description:").append(cursor.getString(2)).append("\n");
-                   buffer.append("Due Date:").append(cursor.getString(3)).append("\n");
-                  //  buffer.append("deadline:").append(res.getString(4)).append("\n");
-                }
-                //show all data
-                showMessage("ALL Data",buffer.toString() );
-            }
-        });
-    }
-    public void showMessage(String title,String message){
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-    }
-    }
-
+//<<<<<<< HEAD
+//import android.app.DatePickerDialog;
+//import android.content.ContentValues;
+//import android.content.Intent;
+//import android.database.Cursor;
+//import android.database.sqlite.SQLiteDatabase;
+//import android.graphics.Color;
+//import android.graphics.drawable.ColorDrawable;
+//import android.support.v7.app.AlertDialog;
+//import android.support.v7.app.AppCompatActivity;
+//import android.os.Bundle;
+//import android.view.View;
+//import android.widget.Button;
+//import android.widget.DatePicker;
+//import android.widget.EditText;
+//import android.widget.Switch;
+//import android.widget.TextView;
+//import android.widget.Toast;
+//
+//import com.example.ben.todotasksapp.R;
+//
+//import java.text.SimpleDateFormat;
+//import java.util.Calendar;
+//import java.util.Date;
+//
+//import static com.example.ben.todotasksapp.addTo.Dbhelper.DATE;
+//import static com.example.ben.todotasksapp.addTo.Dbhelper.col2;
+//import static com.example.ben.todotasksapp.addTo.Dbhelper.col3;
+//
+//public class AddToDoTask extends AppCompatActivity {
+//   Dbhelper dbhelper;
+//    EditText newtask, description;
+//    Switch aswitch;
+//    TextView duedate;
+//    Button btnContinue, viewAddedTask;
+//    int day, month, year;
+//
+//    private DatePickerDialog.OnDateSetListener dateSetListener;
+//
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate (savedInstanceState);
+//        setContentView (R.layout.activity_add_to_do_task);
+//       // mpresenter=new CreateTodoPresenter(this);
+//        dbhelper=new Dbhelper(this);
+//        aswitch = findViewById (R.id.aswitchid);
+//        newtask = findViewById (R.id.nameEditext);
+//        description = findViewById (R.id.descText);
+//        duedate = findViewById (R.id.textStartingDate);
+//       // deadline = findViewById (R.id.textdeadline);
+//        btnContinue = findViewById (R.id.btncontinue);
+//        viewAddedTask=findViewById(R.id.viewAll);
+//
+//        showMessage();
+////        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+////       duedate = sdf.format(new Date());
+//
+//
+//
+//        //        btnContinue.setOnClickListener (new View.OnClickListener () {
+////            @Override
+////            public void onClick(View v) {
+////                editnewtask = newtask.getText ().toString ().trim ();
+////
+//// edtextDescription = description.getText ().toString ().trim ();
+//
+//            btnContinue.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    boolean isInserted = insertData(newtask.getText().toString(), description.getText().toString(),duedate.getText().toString());
+//                    if (isInserted == true) {
+//                        Toast.makeText(AddToDoTask.this, "data successfully inserted", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(AddToDoTask.this, "data not ineserted", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//
+//            });
+//
+//
+////                Intent intent = new Intent (AddToDoTask.this, CapturedDatiles.class);
+////                intent.putExtra ("value", editnewtask);
+////                intent.putExtra ("value2", edtextDescription);
+////                startActivity (intent);intent
+////                intent.putExtra("Date:", month +"/"+day+ "/"+ year+ "/");
+////               intent.putExtra ("Task Name:", newtask);startActivity(intent);
+////                finish ();
+//////        }
+////        import android.app.DatePickerDialog;
+////        import android.content.Intent;
+////        import android.database.Cursor;
+////        import android.graphics.Color;
+////        import android.graphics.drawable.ColorDrawable;
+////        import android.support.v7.app.AlertDialog;
+////        import android.support.v7.app.AppCompatActivity;
+////        import android.os.Bundle;
+////        import android.view.View;
+////        import android.widget.Button;
+////        import android.widget.DatePicker;
+////        import android.widget.EditText;
+////        import android.widget.Switch;
+////        import android.widget.TextView;
+////        import android.widget.Toast;
+////
+////        import com.example.ben.todotasksapp.R;
+////
+//////        import java.util.Calendar;
+//////        import java.util.Date;
+//////
+//////public class AddToDoTask extends AppCompatActivity {
+//////    Dbhelper dbhelper;
+//////    EditText newtask, description;
+//////    Switch aswitch;
+//////    TextView duedate;
+//////
+//////    Button btnContinue, viewAddedTask;
+//////    int day, month, year;
+//////
+//////    private DatePickerDialog.OnDateSetListener dateSetListener;
+//////
+//////
+//////    @Override
+//////    protected void onCreate(Bundle savedInstanceState) {
+//////        super.onCreate (savedInstanceState);
+//////        setContentView (R.layout.activity_add_to_do_task);
+//////        // mpresenter=new CreateTodoPresenter(this);
+//////        dbhelper=new Dbhelper(this);
+//////        aswitch = findViewById (R.id.aswitchid);
+//////        newtask = findViewById (R.id.nameEditext);
+//////        description = findViewById (R.id.descText);
+//////        duedate = findViewById (R.id.textStartingDate);
+//////        // deadline = findViewById (R.id.textdeadline);
+//////        btnContinue = findViewById (R.id.btncontinue);
+//////        viewAddedTask=findViewById(R.id.viewAll);
+//////        showMessage();
+//////id
+////        //        btnContinue.setOnClickListener (new View.OnClickListener () {
+//////            @Override
+//////            public void onClick(View v) {
+//////                editnewtask = newtask.getText ().toString ().trim ();
+//////                edtextDescription = description.getText ().toString ().trim ();
+////        btnContinue.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                boolean isInserted =dbhelper.insertData(newtask.getText().toString(),description.getText().toString(),duedate.getText().toString());
+////                if (isInserted) {
+////                    Toast.makeText( AddToDoTask.this, "data successfully inserted", Toast.LENGTH_SHORT).show();
+////                } else {
+////                    Toast.makeText( AddToDoTask.this, "data not ineserted",Toast.LENGTH_SHORT).show();
+////                }
+////            }
+////        });
+//////                Intent intent = new Intent (AddToDoTask.this, CapturedDatiles.class);
+//////                intent.putExtra ("value", editnewtask);
+//////                intent.putExtra ("value2", edtextDescription);
+//////                startActivity (intent);intent
+//////                intent.putExtra("Date:", month +"/"+day+ "/"+ year+ "/");
+//////               intent.putExtra ("Task Name:", newtask);startActivity(intent);
+//////                finish ();
+////////        }
+////
+////
+////
+////        duedate.setOnClickListener (new View.OnClickListener () {
+////            @Override
+////            public void onClick(View v) {
+////                Calendar cal = Calendar.getInstance ();
+////                year = cal.get (Calendar.YEAR);
+////                month = cal.get (Calendar.MONTH);
+////                day = cal.get (Calendar.DAY_OF_MONTH);
+////                DatePickerDialog dialog = new DatePickerDialog (AddToDoTask.this, android.R.style.Theme_Holo_Dialog_MinWidth,
+////                        dateSetListener, year, month, day);
+////                dialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
+////                dialog.show ();
+////
+////            }
+////        });
+////
+////
+////        dateSetListener = new DatePickerDialog.OnDateSetListener () {
+////            @Override
+////            public void onDateSet(DatePicker view, int year, int month, int day) {
+////                //month = month + 1;
+////                //  Log.d("on date set Date:mm/dd/yy" + month +"/"+ day ,"/"+ year);
+////            }
+////        };
+////
+//////        deadline.setOnClickListener (new View.OnClickListener () {
+//////            @Override
+//////            public void onClick(View v) {
+//////                Calendar cal = Calendar.getInstance ();
+//////                year = cal.get (Calendar.YEAR);
+//////                month = cal.get (Calendar.MONTH);
+//////                day = cal.get (Calendar.DAY_OF_MONTH);
+//////                DatePickerDialog dialog = new DatePickerDialog (AddToDoTask.this, android.R.style.Theme_Holo_Dialog_MinWidth,
+//////                        dateSetListener, year, month, day);
+//////                dialog.getWindow ().setBackgroundDrawable (new ColorDrawable (Color.TRANSPARENT));
+//////                dialog.show ();
+////
+//////            }
+//////        });
+////        dateSetListener = new DatePickerDialog.OnDateSetListener () {
+////            @Override
+////            public void onDateSet(DatePicker view, int year, int month, int day) {
+////                month = month + 1;
+////                // Log.d ("on date set Date:mm/dd/yy" + month + "/" + day, "/" + year);
+////                String date = month + "/" + day + "/" + year;
+////                duedate.setText (date);
+////                // deadline.setText (date);
+////
+////
+////            }
+////        };
+////    }
+////
+////    public void onSwitchClick(View view) {
+////        if (aswitch.isChecked ())
+////            Toast.makeText (AddToDoTask.this, "high priority set", Toast.LENGTH_SHORT).show ();
+////        else
+////            Toast.makeText (AddToDoTask.this, "off", Toast.LENGTH_SHORT).show ();
+////    }
+////    public void showMessage(){
+////        viewAddedTask.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                Cursor res = dbhelper.getAllData();
+////                if (res.getCount() == 0) {
+////                    // show message
+////                    showMessage("Error!", "No content Recorded");
+////                    return;
+////                }
+////                StringBuilder buffer = new StringBuilder();
+////                while (res.moveToNext()) {
+////                    buffer.append("id:").append(res.getString(0)).append("\n");
+////                    buffer.append("Task Name:").append(res.getString(1)).append("\n");
+////                    buffer.append("Description:").append(res.getString(2)).append("\n");
+////                    buffer.append("Due Date:").append(res.getString(3)).append("\n");
+////                    //  buffer.append("deadline:").append(res.getString(4)).append("\n");
+////                }
+////                //show all data
+////                showMessage("ALL Data",buffer.toString() );
+////            }
+////        });
+////
+////    }
+////    public void showMessage(String title,String message){
+////        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+////        builder.setCancelable(true);
+////        builder.setTitle(title);
+////        builder.setMessage(message);
+////        builder.show();
+////    }
+////
+////
+////
+////
+////}
