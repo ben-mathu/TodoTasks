@@ -6,6 +6,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class User {
     @ColumnInfo(name = "last_name")
     private String lname;
     @ColumnInfo(name = "date_timestamp")
-    private Date date;
+    private String date;
 
     public User(@NonNull String userId, String userName) {
         this.userId = userId;
@@ -32,12 +33,12 @@ public class User {
     }
 
     @Ignore
-    public User(int userNum, String userId, String userName, String fname, String lname, Date date) {
+    public User(String userName, String fname, String lname) {
         this.userId = UUID.randomUUID().toString();
         this.userName = userName;
         this.fname = fname;
         this.lname = lname;
-        this.date = new Date(date.getTime());
+        this.date = new SimpleDateFormat("yyyy-MM-DD").format(new Date());
     }
 
     public String getUserId() {
@@ -56,11 +57,11 @@ public class User {
         this.userName = userName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

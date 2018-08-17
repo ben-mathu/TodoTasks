@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,16 +20,16 @@ public class Task {
     @ColumnInfo(name = "name_task")
     private String taskName;
     @ColumnInfo(name = "task_list_timestamp")
-    private Date date;
+    private String date;
 
     @Ignore
     public Task(String taskName) {
         this.taskId = UUID.randomUUID().toString();
         this.taskName = taskName;
-        this.date = new Date(System.currentTimeMillis());
+        this.date = new SimpleDateFormat("YY-MM-DD").format(new Date());
     }
 
-    public Task(String taskId, String taskName, Date date) {
+    public Task(String taskId, String taskName, String date) {
         this.taskId = taskId;
         this.taskName = taskName;
         this.date = date;
@@ -58,11 +59,11 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
