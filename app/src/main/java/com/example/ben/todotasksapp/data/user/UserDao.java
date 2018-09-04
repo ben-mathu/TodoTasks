@@ -8,19 +8,21 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.ben.todotasksapp.data.task.model.Task;
 import com.example.ben.todotasksapp.data.user.models.User;
 
 import java.util.List;
+
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 @Dao
 public interface UserDao {
 
     @Query("SELECT * FROM users")
-    LiveData<List<User>> getUsers();
+    Flowable<List<User>> getUsers();
 
     @Query("SELECT * FROM users WHERE user_id = :userId LIMIT 1")
-    LiveData<User> getUser(String userId);
+    Flowable<User> getUser(String userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);

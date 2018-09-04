@@ -3,4 +3,9 @@
     <string name="time_remained">Remaining Time</string>
     <string name="search">Search</string>
     <string name="error_list_task">Error: Task list is empty</string>
+    <string name="tasks">Tasks</string>
+    <string name="add_task">Add Task</string>
+    <string name="add_subtask">Add Subtask</string>
+    <string name="view_tasks">View Tasks</string>
+    <string name="save">Save</string>
 </resources>

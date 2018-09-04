@@ -8,16 +8,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme2TaskApp">
-        <activity android:name=".TaskMainActivity">
+        android:theme="@style/AppTheme2TaskApp"
+        android:name=".MyApplication">
+        <activity android:name=".TaskMainActivity"/>
+        <activity android:name=".tasklist.ListTaskActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".tasklist.ListTaskActivity" />
         <activity android:name=".displaytask.DisplayTaskActivity" />
+        <activity android:name=".addtask.AddTaskActivity" />
     </application>
 
 </manifest>

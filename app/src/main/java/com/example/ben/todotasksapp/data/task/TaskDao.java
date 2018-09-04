@@ -1,6 +1,5 @@
 package com.example.ben.todotasksapp.data.task;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -8,28 +7,31 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.ben.todotasksapp.data.task.model.Task;
+import com.example.ben.todotasksapp.data.task.model.TaskDetails;
 
 import java.util.List;
+
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 @Dao
 public interface TaskDao {
 
-    @Query("SELECT * FROM tasks")
-    LiveData<List<Task>> getTasks();
+    @Query("SELECT * FROM task_details")
+    Flowable<List<TaskDetails>> viewAll();
 
-    @Query("SELECT * FROM tasks WHERE task_id = :taskId LIMIT 1")
-    LiveData<Task> getTask(String taskId);
+    @Query("SELECT * FROM task_details WHERE task_id =:taskId LIMIT 1")
+    Flowable<TaskDetails> getTask(String taskId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertTask(Task task);
+    void insertTask(TaskDetails taskDetails);
 
-    @Query("DELETE FROM tasks")
+    @Query("DELETE FROM task_details")
     void deleteAllTasks();
 
     @Delete
-    void deleteTask(Task task);
+    void deleteTask(TaskDetails taskDetails);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void update(Task task);
+    void update(TaskDetails taskDetails);
 }

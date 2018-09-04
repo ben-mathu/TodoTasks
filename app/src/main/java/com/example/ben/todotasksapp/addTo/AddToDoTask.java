@@ -87,7 +87,7 @@
 ////                intent.putExtra ("value2", edtextDescription);
 ////                startActivity (intent);intent
 ////                intent.putExtra("Date:", month +"/"+day+ "/"+ year+ "/");
-////               intent.putExtra ("Task Name:", newtask);startActivity(intent);
+////               intent.putExtra ("TaskDetails Name:", newtask);startActivity(intent);
 ////                finish ();
 //////        }
 ////        import android.app.DatePickerDialog;
@@ -159,7 +159,7 @@
 //////                intent.putExtra ("value2", edtextDescription);
 //////                startActivity (intent);intent
 //////                intent.putExtra("Date:", month +"/"+day+ "/"+ year+ "/");
-//////               intent.putExtra ("Task Name:", newtask);startActivity(intent);
+//////               intent.putExtra ("TaskDetails Name:", newtask);startActivity(intent);
 //////                finish ();
 ////////        }
 ////
@@ -236,7 +236,7 @@
 ////                StringBuilder buffer = new StringBuilder();
 ////                while (res.moveToNext()) {
 ////                    buffer.append("id:").append(res.getString(0)).append("\n");
-////                    buffer.append("Task Name:").append(res.getString(1)).append("\n");
+////                    buffer.append("TaskDetails Name:").append(res.getString(1)).append("\n");
 ////                    buffer.append("Description:").append(res.getString(2)).append("\n");
 ////                    buffer.append("Due Date:").append(res.getString(3)).append("\n");
 ////                    //  buffer.append("deadline:").append(res.getString(4)).append("\n");

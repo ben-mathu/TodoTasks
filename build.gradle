@@ -29,9 +29,13 @@ task clean(type: Delete) {
 }
 
 ext {
-
     roomVersion = '1.1.1'
-    rxandroidVersion = '2.0.2'
-    rxjavaVersion = '2.2.0'
+    rxandroidVersion = '2.0.1'
+    rxjavaVersion = '2.0.9'
     daggerVersion = '2.0'
+    retrofitVersion = '2.4.0'
+    gsonVersion = '2.8.0'
+    gsonConverterVersion = '2.2.0'
+    scalarsConverterVersion = '2.1.0'
+    glideVersion = '3+'
 }

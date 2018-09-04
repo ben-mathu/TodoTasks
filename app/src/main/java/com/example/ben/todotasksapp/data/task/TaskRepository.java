@@ -1,56 +1,60 @@
 package com.example.ben.todotasksapp.data.task;
 
-import android.arch.lifecycle.LiveData;
+import android.content.Context;
 
-import com.example.ben.todotasksapp.data.task.model.Task;
-import com.example.ben.todotasksapp.data.task.source.TaskDataSource;
-import com.example.ben.todotasksapp.data.task.source.local.TaskLocalDataSource;
+import com.example.ben.todotasksapp.data.DataSource;
+import com.example.ben.todotasksapp.data.TodoTaskAppDatabase;
+import com.example.ben.todotasksapp.data.task.model.TaskDetails;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
-public class TaskRepository implements TaskDataSource {
-    private final TaskLocalDataSource taskLocalDataSource;
-    private final Executor executor;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-    public TaskRepository(TaskLocalDataSource taskLocalDataSource, Executor executor) {
-        this.taskLocalDataSource = taskLocalDataSource;
-        this.executor = executor;
+public class TaskRepository implements DataSource<TaskDetails, String> {
+    private TodoTaskAppDatabase todoTaskAppDatabase;
+
+    private TaskDao taskDao;
+
+    public TaskRepository(Context context) {
+        todoTaskAppDatabase = TodoTaskAppDatabase.getTodoTaskAppDatabase(context);
+        this.taskDao = todoTaskAppDatabase.taskDao();
     }
 
     @Override
-    public LiveData<List<Task>> getAll() {
-        // TODO : create a method that updates local repository
-        return taskLocalDataSource.getAll();
+    public Observable<List<TaskDetails>> getAll() {
+        return taskDao.viewAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .toObservable();
     }
 
     @Override
-    public LiveData<Task> getOne(String id) {
-        return taskLocalDataSource.getOne(id);
+    public Observable<TaskDetails> getOne(String id) {
+        return taskDao.getTask(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .toObservable();
     }
 
     @Override
-    public void save(Task task) {
-        taskLocalDataSource.save(task);
-    }
-
-    @Override
-    public void delete(Task task) {
-        taskLocalDataSource.delete(task);
-    }
-
-    @Override
-    public void update(Task task) {
-        taskLocalDataSource.update(task);
+    public void delete(TaskDetails item) {
+        taskDao.deleteTask(item);
     }
 
     @Override
     public void deleteAll() {
-        taskLocalDataSource.deleteAll();
+        taskDao.deleteAllTasks();
     }
 
     @Override
-    public Task getLastCreated() {
-        return null;
+    public void update(TaskDetails item) {
+        taskDao.update(item);
+    }
+
+    @Override
+    public void save(TaskDetails item) {
+        taskDao.insertTask(item);
     }
 }
